@@ -1,29 +1,53 @@
-#https://gist.github.com/deekayen/4148741
 import random
 import discord
-import random
+import json
 from discord.ext import commands
-bot = commands.Bot(command_prefix='-', help_command=None)
 
-words = open("1-1000.txt","r")
-LOW = words.read()
-LOW = LOW.split('\n')
-words.close()
-print("LOW has been read")
+intents = discord.Intents.all()
+intents.members = True
+bot = commands.Bot(command_prefix='!', help_command=None, intents=intents)
+
+words_json = open("words.json", "r")
+words = json.load(words_json)
+words_json.close()
+nouns = words['nouns']
+verbs = words['verbs']
+adjective = words['adjective']
+adverb = words['adverb']
+pronoun = words['pronoun']
+sentence = words['sentence']
+
 
 @bot.command()
 async def sentincegen(ctx):
-    WC = random.randint(5,17)
-    sentince = ""
-    for x in range(WC):
-        sentince = sentince + ' ' + random.choice(LOW)
-        x = x + 1
+    lts = random.choice(sentence)
+    lta = lts.split(' ')
+    rsen = ""
+    for x in lta:
+        if int(x) == 1:
+            rsen += random.choice(nouns)
+            rsen += " "
+        elif int(x) == 2:
+            rsen += random.choice(verbs)
+            rsen += " "
+        elif int(x) == 3:
+            rsen += random.choice(adjective)
+            rsen += " "
+        elif int(x) == 4:
+            rsen += random.choice(adverb)
+            rsen += " "
+        elif int(x) == 5:
+            rsen += random.choice(pronoun)
+            rsen += " "
+    await ctx.send(rsen)
 
-    sentince = sentince + "."
-    print(sentince)
-    await ctx.send(sentince)
+# a list of words referenced
+# https://eslgrammar.org/list-of-nouns/
+# other list
+# https://blog.prepscholar.com/verbs-list
 
-        
-def setup(bot):
+
+async def setup(bot):
+    # help page a found, I will credit if it can find it again
     # Every extension should have this function
     bot.add_command(sentincegen)

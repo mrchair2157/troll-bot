@@ -1,16 +1,20 @@
 import discord
 from discord.ext import commands
-import time
-import random
-import string
+import asyncio
+tok= "MTAxMDIxODU5MDE3NzM0MTQ1MA.G3ietK.Bd0xw-IaQegqRHYwrePfyedaXUyZvDUfkrhnY4"
+intents = discord.Intents.all()
+intents.members = True
+bot = commands.Bot(command_prefix='-', help_command=None, intents=intents)
 
-bot = commands.Bot(command_prefix='-', help_command=None)
 
-def main():
-    
-    bot.load_extension("sentencegen")
-    bot.load_extension("Gifs")
-    bot.run('token here')
+async def main():
+    print("Main Function")
+    await bot.load_extension("wiki")
+    await bot.load_extension("Gifs")
+    await bot.load_extension("Trolls")
+    await bot.load_extension("sentencegen")
+    await bot.start(tok)
+
 
 @bot.event
 async def on_ready():
@@ -18,4 +22,4 @@ async def on_ready():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.get_event_loop().run_until_complete(main())
