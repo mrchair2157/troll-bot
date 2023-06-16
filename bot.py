@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
-tok= "MTAxMDIxODU5MDE3NzM0MTQ1MA.G3ietK.Bd0xw-IaQegqRHYwrePfyedaXUyZvDUfkrhnY4"
+tok= ""
 intents = discord.Intents.all()
 intents.members = True
 bot = commands.Bot(command_prefix='-', help_command=None, intents=intents)
